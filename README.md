@@ -10,7 +10,7 @@ match; everything here is used to confirm that report.
 | Path | Description |
 |------|-------------|
 | `pkg/verifier` | Pure-Go library that reproduces the dice stream from a JSON report and returns `true/false`. |
-| `cmd/cli` | Tiny command-line wrapper around the library (`faircli`). |
+| `cmd/verifier` | Tiny command-line wrapper around the library. |
 | `cmd/wasm` | Same code compiled to WebAssembly and exported as a single JS function `verify(json)`. |
 | `web/` | Minimal HTML page that loads `verifier.wasm` and lets a player paste a report to get an immediate ✅ / ❌ result. |
 
@@ -20,8 +20,7 @@ match; everything here is used to confirm that report.
 ### 1. Build the CLI
 
 ```bash
-go run ./cmd/cli        # or `go install ./cmd/cli`
-faircli < report.json   # prints VERIFIED ✅ or error
+go run ./cmd/verifier < report.json   # prints VERIFIED ✅ or error
 ```
 
 ### 2. Build the browser demo
