@@ -14,7 +14,6 @@ match; everything here is used to confirm that report.
 | `cmd/wasm` | Same code compiled to WebAssembly and exported as a single JS function `verify(json)`. |
 | `web/` | Minimal HTML page that loads `verifier.wasm` and lets a player paste a report to get an immediate ✅ / ❌ result. |
 
-> **No C++ code lives here** – only the open-source verifier.
 
 ## Quick start
 

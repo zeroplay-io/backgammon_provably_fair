@@ -151,8 +151,8 @@
 			$("out").textContent = "Verifying…";
 			try {
 				const res = verify($("input").value);
-				$("out").textContent = res;
 				$("out").className = res == "OK" ? "good" : "bad";
+				$("out").textContent = res == "OK" ? "✅ VERIFIED" : "❌ " + res;
 			} catch (err) {
 				$("out").textContent = "Error: " + err;
 				$("out").className = "bad";
