@@ -29,8 +29,8 @@ type Report struct {
 	GameID         string        `json:"game_id"`
 	ServerSeed     string        `json:"server_seed"`      // hex-encoded 16 B
 	ServerSeedHash string        `json:"server_seed_hash"` // SHA-256(serverSeed) hex
+	Rolls          string        `json:"rolls"`            // each element = AABBCC...
 	Players        []PlayerEntry `json:"players"`          // length == 2
-	Rolls          [][2]int      `json:"rolls"`            // each element = {d1,d2}
 }
 
 // PlayerEntry describes one player’s contribution to the seed mix.
@@ -133,6 +133,9 @@ func Verify(rep Report) error {
 	if len(rep.Players) != 2 {
 		return errors.New("report must contain exactly 2 players")
 	}
+	if len(rep.Rolls)%2 != 0 {
+		return errors.New("report must contain exactly odds rolls")
+	}
 	srvSeed, err := decodeHex(rep.ServerSeed, "serverSeed")
 	if err != nil {
 		return err
@@ -146,11 +149,13 @@ func Verify(rep Report) error {
 	}
 
 	var nonce uint32
-	for i, rec := range rep.Rolls {
+	for i := 0; i < len(rep.Rolls); i += 2 {
+		r1, r2 := rep.Rolls[i], rep.Rolls[i+1]
 		d1, d2 := rollDice(srvSeed, combined, &nonce)
-		if d1 != rec[0] || d2 != rec[1] {
-			return fmt.Errorf("roll %d mismatch: exp(%d,%d) got(%d,%d)",
-				i, d1, d2, rec[0], rec[1])
+		e1 := byte(d1) + '0'
+		e2 := byte(d2) + '0'
+		if e1 != r1 || e2 != r2 {
+			return fmt.Errorf("roll %d mismatch: expected (%v,%v), but got(%v,%v)", i, d1, d2, r1-'0', r2-'0')
 		}
 	}
 	return nil
