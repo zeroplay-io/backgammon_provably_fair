@@ -1,3 +1,5 @@
 *.swo
 *.swp
 .DS_Store
+/build/
+*.local.mk

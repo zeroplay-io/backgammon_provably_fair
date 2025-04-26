@@ -1,0 +1,27 @@
+# dist.local.mk ─ Site-specific publish script
+# Invoked by the top-level `make dist`
+#
+# VARS --------------------------------------------------------------
+# DEST – directory where the built web assets are copied to.
+#        Override on the command line if needed:
+#            make DEST=/var/www/my-site -f dist.local.mk
+DEST ?= /path/to/dist
+
+# SOURCE dir (the compiled web bundle lives here)
+SRC  := $(CURDIR)/web
+
+# TARGETS -----------------------------------------------------------
+
+# Default target: copy web/ → $(DEST)
+all: publish
+
+publish:
+	@echo "==> Publishing “$(SRC)” to “$(DEST)”"
+	@mkdir -p $(DEST)
+	@rsync -a --delete $(SRC)/ $(DEST)/
+
+# Optional: remove previously published files
+clean:
+	@echo "==> Cleaning “$(DEST)”"
+	@rm -rf $(DEST)/*
+
