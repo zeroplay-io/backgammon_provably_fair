@@ -29,7 +29,7 @@
 			justify-content: center;
 			align-items: flex-start;
 			min-height: 100vh;
-			padding: 24px;
+			padding: 12px;
 		}
 
 		#wrapper {
@@ -39,7 +39,7 @@
 			max-width: 720px;
 			background: var(--panel);
 			border-radius: 12px;
-			padding: 24px;
+			padding: 12px;
 			box-shadow: 0 4px 18px rgba(0, 0, 0, .08);
 		}
 
@@ -74,7 +74,7 @@
 
 		textarea {
 			width: 100%;
-			min-height: 200px;
+			min-height: 150px;
 			background: #fff;
 			border: 1px solid #ccc;
 			color: var(--txt);
@@ -105,7 +105,6 @@
 		button:disabled {
 			opacity: .6;
 			cursor: default;
-			transform: scale(.97);
 		}
 
 		pre {
@@ -223,8 +222,9 @@
 		<div id="progress"></div>
 		<div id="success"></div>
 
-		<textarea id="input" placeholder="Copy or drag report file to here"></textarea>
-		<pre id="out"></pre>
+		<textarea id="input" spellcheck="false" autocorrect="off" autocomplete="off"
+			placeholder="Copy or drag report file to here"></textarea>
+		<pre id="out"> </pre>
 		<button id="btn">Verify</button>
 
 		<footer>
@@ -287,10 +287,9 @@
 			const btn = $("btn"), bar = $("progress"), out = $("out");
 			const MIN_MS = 800;
 
-			out.textContent = "";
+			out.textContent = "Verifying…";
 			out.className = "";
 			btn.disabled = true;
-			btn.textContent = "Verifying…";
 
 			bar.classList.remove("loading");
 			bar.offsetWidth;              /* reset animation */
@@ -304,7 +303,6 @@
 			setTimeout(() => {
 				bar.classList.remove("loading");
 				btn.disabled = false;
-				btn.textContent = "Verify";
 
 				if (err) {
 					out.className = "bad";
