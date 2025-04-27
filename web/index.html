@@ -74,7 +74,7 @@
 
 		textarea {
 			width: 100%;
-			min-height: 150px;
+			min-height: 200px;
 			background: #fff;
 			border: 1px solid #ccc;
 			color: var(--txt);
@@ -82,6 +82,10 @@
 			padding: 12px;
 			border-radius: 8px;
 			resize: vertical;
+			white-space: pre-wrap;
+			word-break: break-all;
+			overflow-x: hidden;
+			overflow-y: auto;
 		}
 
 		button {
@@ -108,7 +112,7 @@
 		}
 
 		pre {
-			margin-top: 16px;
+			margin-top: 12px;
 			white-space: pre-wrap;
 			word-break: break-all;
 			background: #fafafa;
