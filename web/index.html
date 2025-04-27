@@ -33,6 +33,8 @@
 		}
 
 		#wrapper {
+			position: relative;
+			overflow: hidden;
 			width: 100%;
 			max-width: 720px;
 			background: var(--panel);
@@ -41,10 +43,33 @@
 			box-shadow: 0 4px 18px rgba(0, 0, 0, .08);
 		}
 
-		h1 {
-			font-size: 1.4rem;
-			margin-bottom: 12px;
-			text-align: center;
+		/* progress bar */
+		#progress {
+			position: absolute;
+			left: 0;
+			top: 0;
+			height: 3px;
+			width: 0;
+			background: var(--accent);
+			pointer-events: none;
+			opacity: 0;
+		}
+
+		@keyframes loadBar {
+			from {
+				width: 0;
+				opacity: .9;
+			}
+
+			to {
+				width: 100%;
+				opacity: .9;
+			}
+		}
+
+		#progress.loading {
+			animation: loadBar .8s linear forwards;
+			opacity: 1;
 		}
 
 		textarea {
@@ -70,11 +95,17 @@
 			border: none;
 			border-radius: 8px;
 			cursor: pointer;
-			transition: filter .15s;
+			transition: filter .15s, transform .15s;
 		}
 
-		button:hover {
+		button:hover:not(:disabled) {
 			filter: brightness(1.1);
+		}
+
+		button:disabled {
+			opacity: .6;
+			cursor: default;
+			transform: scale(.97);
 		}
 
 		pre {
@@ -94,6 +125,78 @@
 
 		.good {
 			color: var(--accent);
+			animation: pulse 1.4s ease-out;
+		}
+
+		@keyframes pulse {
+			0% {
+				text-shadow: 0 0 0 rgba(61, 207, 143, 0);
+			}
+
+			40% {
+				text-shadow: 0 0 14px rgba(61, 207, 143, .8);
+			}
+
+			100% {
+				text-shadow: 0 0 0 rgba(61, 207, 143, 0);
+			}
+		}
+
+		/* success overlay & checkmark */
+		#success {
+			position: absolute;
+			inset: 0;
+			display: none;
+			justify-content: center;
+			align-items: center;
+			pointer-events: none;
+		}
+
+		#success.show {
+			display: flex;
+		}
+
+		#success svg {
+			width: 110px;
+			height: 110px;
+			stroke: var(--accent);
+			fill: none;
+			stroke-width: 2;
+			stroke-linecap: round;
+			stroke-linejoin: round;
+			stroke-dasharray: 165;
+			stroke-dashoffset: 165;
+			animation: draw 0.55s ease-out forwards, pop 0.55s cubic-bezier(.3, 1.4, .4, 1) forwards;
+		}
+
+		@keyframes draw {
+			to {
+				stroke-dashoffset: 0;
+			}
+		}
+
+		@keyframes pop {
+			0% {
+				transform: scale(.4);
+			}
+
+			70% {
+				transform: scale(1.15);
+			}
+
+			100% {
+				transform: scale(1);
+			}
+		}
+
+		/* sparkles */
+		.spark {
+			position: absolute;
+			width: 6px;
+			height: 6px;
+			background: var(--accent);
+			border-radius: 50%;
+			opacity: 0;
 		}
 
 		footer {
@@ -113,94 +216,127 @@
 		}
 
 	</style>
-
 </head>
 
 <body>
 	<div id="wrapper">
+		<div id="progress"></div>
+		<div id="success"></div>
+
 		<textarea id="input" placeholder="Copy or drag report file to here"></textarea>
 		<pre id="out"></pre>
 		<button id="btn">Verify</button>
 
-		<footer>Offline Running · Provably Fair · <a href="https://github.com/gopherd/backgammon_provably_fair"
-				target="_blank" rel="noopener"><strong>Open Source</strong></a></footer>
+		<footer>
+			Offline Running · Provably Fair ·
+			<a href="https://github.com/gopherd/backgammon_provably_fair" target="_blank" rel="noopener">
+				<strong>Open Source</strong>
+			</a>
+		</footer>
 	</div>
 
 	<script src="wasm_exec.js"></script>
 	<script>
-		/* ------- Go → WASM runtime bootstrap ------- */
 		const go = new Go();
 		let wasmReady = false;
 
 		WebAssembly.instantiateStreaming(fetch("verifier.wasm"), go.importObject)
-			.then(r => {
-				go.run(r.instance);     // verify() 会被导出到全局
-				wasmReady = true;       // 标记：verify 已可用
-				maybeAutoVerify();      // 若有 report 参数，立刻执行
-			});
+			.then(r => {go.run(r.instance); wasmReady = true; maybeAutoVerify();});
 
-		/* ------- UI helpers ------- */
 		const $ = id => document.getElementById(id);
 		$("btn").onclick = run;
 
 		$("input").addEventListener("dragover", e => e.preventDefault());
 		$("input").addEventListener("drop", e => {
 			e.preventDefault();
-			if (!e.dataTransfer.files.length) return;
-			e.dataTransfer.files[0].text().then(t => {$("input").value = t;});
+			if (e.dataTransfer.files.length)
+				e.dataTransfer.files[0].text().then(t => {$("input").value = t;});
 		});
 
-		/* ------- 核心函数 ------- */
-		function run() {
-			$("out").textContent = "Verifying…";
-			try {
-				const res = verify($("input").value);
-				$("out").className = (res === "OK" ? "good" : "bad");
-				$("out").textContent = (res === "OK" ? "✅ VERIFIED" : "❌ " + res);
-			} catch (err) {
-				$("out").className = "bad";
-				$("out").textContent = "Error: " + err;
+		function fireSuccess() {
+			const overlay = $("success");
+			overlay.innerHTML =
+				'<svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="25"/><path d="M16 26l7 7 13-13"/></svg>';
+			overlay.classList.add("show");
+
+			const bursts = 24;
+			for (let i = 0; i < bursts; i++) {
+				const s = document.createElement("div");
+				s.className = "spark";
+				const angle = Math.random() * 2 * Math.PI;
+				const dist = 90 + Math.random() * 40;
+				s.style.left = "50%";
+				s.style.top = "50%";
+				overlay.appendChild(s);
+
+				const anim1 = s.animate([
+					{transform: "translate(-50%,-50%) scale(1)", opacity: 1},
+					{
+						transform:
+							`translate(${Math.cos(angle) * dist}px,${Math.sin(angle) * dist}px) scale(.5)`,
+						opacity: 0
+					}
+				], {duration: 700, easing: "cubic-bezier(.4,0,.2,1)", fill: "forwards"});
+				anim1.onfinish = () => s.remove();
 			}
+
+			setTimeout(() => overlay.classList.remove("show"), 850);
 		}
 
-		/* ------- 自动解析 ?report=BASE64 ------- */
+		function run() {
+			const btn = $("btn"), bar = $("progress"), out = $("out");
+			const MIN_MS = 800;
+
+			out.textContent = "";
+			out.className = "";
+			btn.disabled = true;
+			btn.textContent = "Verifying…";
+
+			bar.classList.remove("loading");
+			bar.offsetWidth;              /* reset animation */
+			bar.classList.add("loading");
+
+			const t0 = performance.now();
+			let res, err;
+			try {res = verify($("input").value);} catch (e) {err = e;}
+			const elapsed = performance.now() - t0;
+
+			setTimeout(() => {
+				bar.classList.remove("loading");
+				btn.disabled = false;
+				btn.textContent = "Verify";
+
+				if (err) {
+					out.className = "bad";
+					out.textContent = "Error: " + err;
+				} else {
+					out.className = res === "OK" ? "good" : "bad";
+					out.textContent = res === "OK" ? "✅ VERIFIED" : "❌ " + res;
+					if (res === "OK") fireSuccess();
+				}
+			}, Math.max(0, MIN_MS - elapsed));
+		}
+
 		function maybeAutoVerify() {
 			const p = new URLSearchParams(window.location.search);
 			if (!p.has("report")) return;
 
 			try {
-				// 先 URL 解码，再把 URL-safe Base64 转回标准形式
-				const b64 = decodeURIComponent(p.get("report"))
-					.replace(/-/g, "+").replace(/_/g, "/");
-				const decoded = atob(b64);          // Base64 → binary string
+				const b64 = decodeURIComponent(p.get("report")).replace(/-/g, "+").replace(/_/g, "/");
+				const decoded = atob(b64);
 				const text = new TextDecoder().decode(
-					Uint8Array.from(decoded, c => c.charCodeAt(0))); // UTF-8
-
+					Uint8Array.from(decoded, c => c.charCodeAt(0)));
 				$("input").value = text;
 
-				const doVerify = () => {
-					run();
-					// --- 滚动到底部 ---
-					window.scrollTo({
-						top: document.body.scrollHeight,
-						behavior: "smooth"   // 想要瞬间跳转就去掉这一行
-					});
-				};
-
-				// 如果 WASM 还没就绪，轮询等待
+				const attempt = () => run();
 				if (!wasmReady) {
-					const h = setInterval(() => {
-						if (wasmReady) {clearInterval(h); doVerify();}
-					}, 40);
-				} else {
-					doVerify();
-				}
+					const h = setInterval(() => {if (wasmReady) {clearInterval(h); attempt();} }, 40);
+				} else attempt();
 			} catch (e) {
 				console.error("Failed to decode report param:", e);
 			}
 		}
 	</script>
-
 </body>
 
 </html>
