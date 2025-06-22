@@ -37,6 +37,6 @@ cp $(go env GOROOT)/misc/wasm/wasm_exec.js web/
 
 The verifier reproduces every roll with HMAC-SHA256(serverSeed, combinedSeed || nonce_be) and checks it against the rolls array.
 
-### 3. Download Apps
+### 3. Play `Backgammon GO: Fair Dice`
 
 [![Download Backgammon GO: Fair Dice from AppStore](img/stores/app-store.svg)](https://apps.apple.com/app/id6739750400)
