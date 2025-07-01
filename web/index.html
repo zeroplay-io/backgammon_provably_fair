@@ -126,45 +126,6 @@
         display: none;
       }
 
-      .paste-area {
-        text-align: center;
-        padding: 24px;
-        border: 2px dashed var(--border);
-        border-radius: 8px;
-        background: var(--panel);
-      }
-
-      .paste-icon {
-        font-size: 2.5rem;
-        margin-bottom: 12px;
-        opacity: 0.7;
-      }
-
-      .paste-text {
-        font-size: 1.1rem;
-        color: var(--txt-muted);
-        margin-bottom: 16px;
-      }
-
-      #pasteInput {
-        width: 100%;
-        min-height: 120px;
-        background: white;
-        border: 1px solid var(--border);
-        color: var(--txt);
-        font: 13px/1.4 monospace;
-        padding: 12px;
-        border-radius: 6px;
-        resize: vertical;
-        margin-bottom: 12px;
-      }
-
-      #pasteInput:focus {
-        outline: none;
-        border-color: var(--accent);
-        box-shadow: 0 0 0 2px var(--accent-light);
-      }
-
       .upload-area {
         border: 2px dashed var(--border);
         border-radius: 8px;
@@ -203,6 +164,45 @@
       .upload-hint {
         font-size: 0.9rem;
         color: var(--txt-muted);
+      }
+
+      .paste-area {
+        text-align: center;
+        padding: 24px;
+        border: 2px dashed var(--border);
+        border-radius: 8px;
+        background: var(--panel);
+      }
+
+      .paste-icon {
+        font-size: 2.5rem;
+        margin-bottom: 12px;
+        opacity: 0.7;
+      }
+
+      .paste-text {
+        font-size: 1.1rem;
+        color: var(--txt-muted);
+        margin-bottom: 16px;
+      }
+
+      #pasteInput {
+        width: 100%;
+        min-height: 120px;
+        background: white;
+        border: 1px solid var(--border);
+        color: var(--txt);
+        font: 13px/1.4 monospace;
+        padding: 12px;
+        border-radius: 6px;
+        resize: vertical;
+        margin-bottom: 12px;
+      }
+
+      #pasteInput:focus {
+        outline: none;
+        border-color: var(--accent);
+        box-shadow: 0 0 0 2px var(--accent-light);
       }
 
       .hidden-textarea {
@@ -363,31 +363,6 @@
         word-break: break-all;
       }
 
-      .dice-comparison {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 12px;
-        margin-top: 8px;
-      }
-
-      .dice-roll {
-        background: var(--panel);
-        padding: 8px 12px;
-        border-radius: 6px;
-        text-align: center;
-        font-weight: 600;
-      }
-
-      .dice-roll.match {
-        background: var(--accent-light);
-        color: var(--accent);
-      }
-
-      .dice-roll.mismatch {
-        background: var(--err-light);
-        color: var(--err);
-      }
-
       .rolls-container {
         max-height: 300px;
         overflow-y: auto;
@@ -509,48 +484,25 @@
         font-size: 0.9rem;
       }
 
-      .collapsible {
-        margin-top: 24px;
-      }
-
-      .collapsible-header {
-        display: flex;
-        align-items: center;
-        justify-content: between;
-        gap: 8px;
-        cursor: pointer;
-        padding: 12px;
-        background: var(--panel);
-        border-radius: 8px;
-        transition: all 0.2s;
-      }
-
-      .collapsible-header:hover {
-        background: #f1f5f9;
-      }
-
-      .collapsible-content {
-        max-height: 0;
+      .progress-bar {
+        width: 100%;
+        height: 4px;
+        background: var(--border);
+        border-radius: 2px;
         overflow: hidden;
-        transition: max-height 0.3s ease;
+        margin-bottom: 24px;
+        display: none;
       }
 
-      .collapsible-content.open {
-        max-height: 400px;
+      .progress-bar.show {
+        display: block;
       }
 
-      .raw-report {
-        background: #1e293b;
-        color: #e2e8f0;
-        font-family: "Monaco", "Menlo", monospace;
-        font-size: 0.8rem;
-        padding: 16px;
-        border-radius: 8px;
-        margin-top: 12px;
-        max-height: 300px;
-        overflow-y: auto;
-        white-space: pre-wrap;
-        border: 1px solid var(--border);
+      .progress-fill {
+        height: 100%;
+        background: var(--accent);
+        width: 0%;
+        transition: width 0.3s ease;
       }
 
       .final-result {
@@ -597,49 +549,6 @@
         color: var(--err);
       }
 
-      @keyframes pulse {
-        0%,
-        100% {
-          opacity: 1;
-        }
-        50% {
-          opacity: 0.5;
-        }
-      }
-
-      @keyframes successBounce {
-        0% {
-          transform: scale(0.3);
-        }
-        50% {
-          transform: scale(1.1);
-        }
-        100% {
-          transform: scale(1);
-        }
-      }
-
-      .progress-bar {
-        width: 100%;
-        height: 4px;
-        background: var(--border);
-        border-radius: 2px;
-        overflow: hidden;
-        margin-bottom: 24px;
-        display: none;
-      }
-
-      .progress-bar.show {
-        display: block;
-      }
-
-      .progress-fill {
-        height: 100%;
-        background: var(--accent);
-        width: 0%;
-        transition: width 0.3s ease;
-      }
-
       .stats {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -663,6 +572,319 @@
       .stat-label {
         color: var(--txt-muted);
         font-size: 0.9rem;
+      }
+
+      .collapsible {
+        margin-top: 24px;
+      }
+
+      .collapsible-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        cursor: pointer;
+        padding: 12px;
+        background: var(--panel);
+        border-radius: 8px;
+        transition: all 0.2s;
+      }
+
+      .collapsible-header:hover {
+        background: #f1f5f9;
+      }
+
+      .collapsible-header-left {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .collapsible-header-right {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .copy-btn {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+        background: var(--accent);
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .copy-btn:hover {
+        background: #059669;
+      }
+
+      .copy-btn.copied {
+        background: var(--accent);
+        animation: copySuccess 0.5s ease;
+      }
+
+      .collapsible-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+      }
+
+      .collapsible-content.open {
+        max-height: 400px;
+      }
+
+      .raw-report {
+        background: #1e293b;
+        color: #e2e8f0;
+        font-family: "Monaco", "Menlo", monospace;
+        font-size: 0.8rem;
+        padding: 16px;
+        border-radius: 8px;
+        margin-top: 12px;
+        max-height: 300px;
+        overflow-y: auto;
+        white-space: pre-wrap;
+        border: 1px solid var(--border);
+      }
+
+      /* Discord Share Modal */
+      .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        animation: fadeIn 0.3s ease;
+      }
+
+      .modal-overlay.show {
+        display: flex;
+      }
+
+      .modal {
+        background: white;
+        border-radius: 16px;
+        padding: 32px;
+        max-width: 500px;
+        width: 90%;
+        max-height: 80vh;
+        overflow-y: auto;
+        box-shadow: var(--shadow-lg);
+        animation: slideUp 0.3s ease;
+        position: relative;
+      }
+
+      .modal-close {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        width: 32px;
+        height: 32px;
+        border: none;
+        background: var(--panel);
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        color: var(--txt-muted);
+        transition: all 0.2s;
+      }
+
+      .modal-close:hover {
+        background: var(--border);
+        color: var(--txt);
+        transform: scale(1.1);
+      }
+
+      .modal-header {
+        text-align: center;
+        margin-bottom: 24px;
+      }
+
+      .modal-icon {
+        font-size: 3rem;
+        margin-bottom: 12px;
+      }
+
+      .modal-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--txt);
+        margin-bottom: 8px;
+      }
+
+      .modal-subtitle {
+        color: var(--txt-muted);
+        font-size: 1rem;
+      }
+
+      .discord-preview {
+        background: #2c2f33;
+        border-radius: 8px;
+        padding: 16px;
+        margin: 20px 0;
+        color: #dcddde;
+        font-family: "Whitney", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 0.875rem;
+        line-height: 1.3;
+        border-left: 4px solid var(--accent);
+      }
+
+      .discord-header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 8px;
+      }
+
+      .discord-avatar {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: var(--accent);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.7rem;
+        font-weight: bold;
+      }
+
+      .discord-username {
+        font-weight: 600;
+        color: #ffffff;
+      }
+
+      .discord-content {
+        margin: 8px 0;
+      }
+
+      .discord-embed {
+        background: #36393f;
+        border-radius: 4px;
+        padding: 12px;
+        margin-top: 8px;
+        border-left: 4px solid var(--accent);
+      }
+
+      .embed-title {
+        font-weight: 600;
+        color: #ffffff;
+        margin-bottom: 4px;
+      }
+
+      .embed-description {
+        color: #dcddde;
+        font-size: 0.8rem;
+      }
+
+      .embed-fields {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        margin-top: 8px;
+      }
+
+      .embed-field {
+        background: #2c2f33;
+        padding: 6px 8px;
+        border-radius: 3px;
+      }
+
+      .embed-field-name {
+        font-size: 0.7rem;
+        font-weight: 600;
+        color: #b9bbbe;
+        text-transform: uppercase;
+      }
+
+      .embed-field-value {
+        font-size: 0.75rem;
+        color: #dcddde;
+      }
+
+      .modal-actions {
+        display: flex;
+        gap: 8px;
+        justify-content: center;
+        margin-top: 24px;
+        flex-wrap: wrap;
+      }
+
+      .btn-discord {
+        background: #5865f2;
+        color: white;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .btn-discord:hover {
+        background: #4752c4;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+        }
+      }
+
+      @keyframes successBounce {
+        0% {
+          transform: scale(0.3);
+        }
+        50% {
+          transform: scale(1.1);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      @keyframes copySuccess {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.1);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px) scale(0.95);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
       }
 
       footer {
@@ -699,6 +921,23 @@
         .btn {
           width: 100%;
           justify-content: center;
+        }
+
+        .modal {
+          padding: 24px 20px;
+          margin: 20px;
+        }
+
+        .modal-close {
+          top: 12px;
+          right: 12px;
+          width: 28px;
+          height: 28px;
+          font-size: 1rem;
+        }
+
+        .embed-fields {
+          grid-template-columns: 1fr;
         }
       }
     </style>
@@ -840,11 +1079,80 @@
 
       <div class="card collapsible" id="rawReportSection" style="display: none">
         <div class="collapsible-header" id="rawReportToggle">
-          <span>📋 Raw Report Data</span>
-          <span style="margin-left: auto">▼</span>
+          <div class="collapsible-header-left">
+            <span>📋 Raw Report Data</span>
+          </div>
+          <div class="collapsible-header-right">
+            <button class="copy-btn" id="copyBtn">📋 Copy</button>
+            <span id="collapseIcon">▼</span>
+          </div>
         </div>
         <div class="collapsible-content" id="rawReportContent">
           <div class="raw-report" id="rawReport"></div>
+        </div>
+      </div>
+
+      <!-- Discord Share Modal -->
+      <div class="modal-overlay" id="discordModal">
+        <div class="modal">
+          <button class="modal-close" id="closeModalBtn" title="Close">
+            ✕
+          </button>
+
+          <div class="modal-header">
+            <div class="modal-icon">🎉</div>
+            <div class="modal-title">Verification Complete!</div>
+            <div class="modal-subtitle">Share your verified fairness proof</div>
+          </div>
+
+          <div class="discord-preview">
+            <div class="discord-header">
+              <div class="discord-avatar">🎲</div>
+              <span class="discord-username">FairnessBot</span>
+            </div>
+            <div class="discord-content">
+              Just verified my game's fairness! 🎯
+            </div>
+            <div class="discord-embed">
+              <div class="embed-title">✅ Provably Fair Verification</div>
+              <div class="embed-description">
+                All dice rolls cryptographically verified
+              </div>
+              <div class="embed-fields">
+                <div class="embed-field">
+                  <div class="embed-field-name">Game ID</div>
+                  <div class="embed-field-value" id="embedGameId">
+                    Loading...
+                  </div>
+                </div>
+                <div class="embed-field">
+                  <div class="embed-field-name">Rolls Verified</div>
+                  <div class="embed-field-value" id="embedRollCount">
+                    Loading...
+                  </div>
+                </div>
+                <div class="embed-field">
+                  <div class="embed-field-name">Fairness Score</div>
+                  <div class="embed-field-value">100% ✅</div>
+                </div>
+                <div class="embed-field">
+                  <div class="embed-field-name">Crypto Standard</div>
+                  <div class="embed-field-value">SHA-256 HMAC</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-actions">
+            <button class="btn btn-discord" id="shareDiscordBtn">
+              <span>💬</span>
+              Join Our Discord
+            </button>
+            <button class="btn btn-secondary" id="shareAnywhereBtn">
+              <span>🌐</span>
+              Share Anywhere
+            </button>
+          </div>
         </div>
       </div>
 
@@ -883,6 +1191,7 @@
       const verifyBtn = $("verifyBtn");
       const clearBtn = $("clearBtn");
       const pasteBtn = $("pasteBtn");
+      const copyBtn = $("copyBtn");
       const fileTab = $("fileTab");
       const pasteTab = $("pasteTab");
       const fileMethod = $("fileMethod");
@@ -894,6 +1203,12 @@
       const rawReportSection = $("rawReportSection");
       const rawReportToggle = $("rawReportToggle");
       const rawReportContent = $("rawReportContent");
+      const collapseIcon = $("collapseIcon");
+      const discordModal = $("discordModal");
+      const shareDiscordBtn = $("shareDiscordBtn");
+      const shareAnywhereBtn = $("shareAnywhereBtn");
+      const copyMessageBtn = $("copyMessageBtn");
+      const closeModalBtn = $("closeModalBtn");
 
       // Tab switching
       fileTab.addEventListener("click", () => {
@@ -986,13 +1301,14 @@
       verifyBtn.addEventListener("click", startVerification);
       clearBtn.addEventListener("click", clearAll);
 
-      rawReportToggle.addEventListener("click", () => {
+      rawReportToggle.addEventListener("click", (e) => {
+        // Don't toggle if clicking the copy button
+        if (e.target.closest(".copy-btn")) return;
+
         const content = rawReportContent;
         const isOpen = content.classList.contains("open");
         content.classList.toggle("open");
-        rawReportToggle.querySelector("span:last-child").textContent = isOpen
-          ? "▼"
-          : "▲";
+        collapseIcon.textContent = isOpen ? "▼" : "▲";
       });
 
       function handleFileContent(content) {
@@ -1019,8 +1335,191 @@
         progressBar.classList.remove("show");
         finalResult.classList.remove("show");
         rawReportSection.style.display = "none";
+        discordModal.classList.remove("show");
         resetSteps();
       }
+
+      // Copy button functionality
+      function setupCopyButton() {
+        copyBtn.addEventListener("click", async (e) => {
+          e.stopPropagation();
+          try {
+            await navigator.clipboard.writeText($("rawReport").textContent);
+            copyBtn.textContent = "✅ Copied";
+            copyBtn.classList.add("copied");
+            setTimeout(() => {
+              copyBtn.textContent = "📋 Copy";
+              copyBtn.classList.remove("copied");
+            }, 2000);
+          } catch (err) {
+            // Fallback for older browsers
+            const textArea = document.createElement("textarea");
+            textArea.value = $("rawReport").textContent;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand("copy");
+            document.body.removeChild(textArea);
+
+            copyBtn.textContent = "✅ Copied";
+            copyBtn.classList.add("copied");
+            setTimeout(() => {
+              copyBtn.textContent = "📋 Copy";
+              copyBtn.classList.remove("copied");
+            }, 2000);
+          }
+        });
+      }
+
+      // Discord modal functionality
+      function setupDiscordModal() {
+        closeModalBtn.addEventListener("click", () => {
+          discordModal.classList.remove("show");
+        });
+
+        // 配置区域 - 在这里设置你的Discord服务器信息
+        const DISCORD_CONFIG = {
+          // 你的Discord服务器邀请链接（推荐）
+          inviteUrl: "https://discord.gg/YOUR_INVITE_CODE", // 替换为你的邀请链接
+
+          // 或者直接链接到特定频道（可选）
+          channelUrl:
+            "https://discord.com/channels/YOUR_SERVER_ID/YOUR_CHANNEL_ID",
+
+          // 服务器名称（用于显示）
+          serverName: "Your Game Community", // 替换为你的服务器名称
+        };
+
+        // 加入官方Discord社区
+        shareDiscordBtn.addEventListener("click", () => {
+          // 复制消息到剪贴板
+          copyDiscordMessage();
+
+          // 打开Discord邀请链接（推荐方式）
+          window.open(DISCORD_CONFIG.inviteUrl, "_blank");
+
+          // 更新按钮状态
+          shareDiscordBtn.innerHTML = "<span>✅</span>Opening Discord!";
+          setTimeout(() => {
+            shareDiscordBtn.innerHTML = "<span>💬</span>Join Our Discord";
+          }, 3000);
+
+          // 显示提示
+          showToast(
+            `Opening ${DISCORD_CONFIG.serverName}! Message copied to clipboard. 🎉`
+          );
+        });
+
+        // 分享到任意地方
+        shareAnywhereBtn.addEventListener("click", () => {
+          // 复制消息
+          copyDiscordMessage();
+
+          // 打开Discord主页面，让用户自己选择
+          window.open("https://discord.com/channels/@me", "_blank");
+
+          // 更新按钮状态
+          shareAnywhereBtn.innerHTML = "<span>✅</span>Discord Opened!";
+          setTimeout(() => {
+            shareAnywhereBtn.innerHTML = "<span>🌐</span>Share Anywhere";
+          }, 3000);
+
+          showToast("Discord opened! Choose any server/channel to share. 📋");
+        });
+
+        function copyDiscordMessage() {
+          const report = JSON.parse(input.value);
+          const rollCount = report.rolls.length / 2;
+
+          const message =
+            `🎲 **Provably Fair Verification Complete!** ✅\n\n` +
+            `**Game ID:** ${report.game_id}\n` +
+            `**Rolls Verified:** ${rollCount}\n` +
+            `**Fairness Score:** 100% ✅\n` +
+            `**Crypto Standard:** SHA-256 HMAC\n\n` +
+            `All dice rolls have been cryptographically verified using the open-source verifier!\n` +
+            `🔗 Verify yourself: ${window.location.origin}`;
+
+          navigator.clipboard
+            .writeText(message)
+            .then(() => {})
+            .catch(() => {
+              // Fallback for older browsers
+              const textArea = document.createElement("textarea");
+              textArea.value = message;
+              document.body.appendChild(textArea);
+              textArea.select();
+              document.execCommand("copy");
+              document.body.removeChild(textArea);
+
+              copyMessageBtn.innerHTML = "<span>✅</span>Copied!";
+              setTimeout(() => {
+                copyMessageBtn.innerHTML = "<span>📋</span>Copy Message";
+              }, 2000);
+            });
+        }
+
+        // Close modal when clicking overlay
+        discordModal.addEventListener("click", (e) => {
+          if (e.target === discordModal) {
+            discordModal.classList.remove("show");
+          }
+        });
+      }
+
+      // Toast notification function
+      function showToast(message) {
+        // Remove existing toast if any
+        const existingToast = document.querySelector(".toast");
+        if (existingToast) existingToast.remove();
+
+        const toast = document.createElement("div");
+        toast.className = "toast";
+        toast.textContent = message;
+        toast.style.cssText = `
+				position: fixed;
+				bottom: 20px;
+				right: 20px;
+				background: var(--accent);
+				color: white;
+				padding: 12px 20px;
+				border-radius: 8px;
+				box-shadow: var(--shadow-lg);
+				z-index: 1001;
+				animation: slideInUp 0.3s ease;
+				max-width: 300px;
+				font-size: 0.9rem;
+				line-height: 1.4;
+			`;
+
+        // Add animation keyframes if not already present
+        if (!document.querySelector("#toastStyle")) {
+          const style = document.createElement("style");
+          style.id = "toastStyle";
+          style.textContent = `
+					@keyframes slideInUp {
+						from { transform: translateY(100%); opacity: 0; }
+						to { transform: translateY(0); opacity: 1; }
+					}
+					@keyframes slideOutDown {
+						from { transform: translateY(0); opacity: 1; }
+						to { transform: translateY(100%); opacity: 0; }
+					}
+				`;
+          document.head.appendChild(style);
+        }
+
+        document.body.appendChild(toast);
+
+        // Auto remove after 4 seconds
+        setTimeout(() => {
+          toast.style.animation = "slideOutDown 0.3s ease forwards";
+          setTimeout(() => toast.remove(), 300);
+        }, 4000);
+      }
+
+      // Initialize event listeners
+      setupCopyButton();
+      setupDiscordModal();
 
       function resetSteps() {
         for (let i = 1; i <= 4; i++) {
@@ -1364,7 +1863,15 @@
             block: "center",
             inline: "nearest",
           });
-        }, 200);
+        }, 100);
+
+        // Show Discord modal after a delay
+        setTimeout(() => {
+          const report = JSON.parse(input.value);
+          $("embedGameId").textContent = report.game_id;
+          $("embedRollCount").textContent = rollCount.toString();
+          discordModal.classList.add("show");
+        }, 1000);
       }
 
       function showError(message) {
