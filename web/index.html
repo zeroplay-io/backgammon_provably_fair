@@ -2066,10 +2066,12 @@
             targetUrl = `https://twitter.com/intent/tweet?text=${shareText}&url=${shareUrl}`;
             break;
           case "facebook":
-            targetUrl = `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`;
+            const FACEBOOK_APP_ID = "491593496803890";
+            const redirect_uri = encodeURIComponent(window.location.href);
+            targetUrl = `https://www.facebook.com/dialog/share?app_id=${FACEBOOK_APP_ID}&display=popup&href=${shareUrl}&redirect_uri=${redirect_uri}`;
             break;
           case "whatsapp":
-            targetUrl = `https://wa.me/?text=${shareText}%20${shareUrl}`;
+            targetUrl = `https://wa.me/?text=${shareText}%20${shareUrl}&type=custom_url`;
             break;
           case "telegram":
             targetUrl = `https://t.me/share/url?url=${shareUrl}&text=${shareText}`;
