@@ -38,6 +38,8 @@
         line-height: 1.6;
         min-height: 100vh;
         padding: 20px;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
       }
 
       .container {
@@ -599,37 +601,96 @@
 
       .action-buttons {
         display: flex;
-        gap: 12px;
+        gap: 16px;
         justify-content: center;
-        margin-top: 20px;
+        margin-top: 32px;
       }
 
-      .btn-game,
-      .btn-share {
-        padding: 10px 20px;
+      .btn-action {
+        position: relative;
+        padding: 16px 32px;
         font-size: 0.95rem;
+        font-weight: 600;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        min-width: 140px;
+        text-decoration: none;
+        overflow: hidden;
+      }
+
+      .btn-action::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.1) 0%,
+          rgba(255, 255, 255, 0) 100%
+        );
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+
+      .btn-action:hover::before {
+        opacity: 1;
+      }
+
+      .btn-action-icon {
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        transition: transform 0.3s;
+      }
+
+      .btn-action:hover .btn-action-icon {
+        transform: scale(1.1);
+      }
+
+      .btn-action-text {
+        font-size: 0.9rem;
+        letter-spacing: 0.025em;
       }
 
       .btn-game {
-        background: var(--info);
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
         color: white;
+        box-shadow: 0 4px 14px 0 rgba(59, 130, 246, 0.3);
       }
 
       .btn-game:hover {
-        background: #2563eb;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px 0 rgba(59, 130, 246, 0.4);
+      }
+
+      .btn-game:active {
         transform: translateY(-1px);
-        box-shadow: var(--shadow-lg);
       }
 
       .btn-share {
-        background: var(--accent);
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
         color: white;
+        box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.3);
       }
 
       .btn-share:hover {
-        background: #059669;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px 0 rgba(16, 185, 129, 0.4);
+      }
+
+      .btn-share:active {
         transform: translateY(-1px);
-        box-shadow: var(--shadow-lg);
       }
 
       .modal-overlay {
@@ -834,7 +895,7 @@
       footer {
         text-align: center;
         margin-top: 48px;
-        padding-top: 24px;
+        padding: 24px 16px 40px;
         border-top: 1px solid var(--border);
         color: var(--txt-muted);
         font-size: 0.9rem;
@@ -850,8 +911,13 @@
       }
 
       @media (max-width: 768px) {
+        body {
+          padding: 16px;
+          padding-bottom: 32px;
+        }
+
         .container {
-          padding: 0 16px;
+          padding: 0;
         }
 
         .card {
@@ -868,11 +934,32 @@
         }
 
         .action-buttons {
-          flex-direction: column;
+          flex-direction: row;
+          gap: 12px;
+        }
+
+        .btn-action {
+          min-width: 0;
+          flex: 1;
+          padding: 12px 16px;
+        }
+
+        .btn-action-icon {
+          width: 28px;
+          height: 28px;
+          font-size: 1.3rem;
+        }
+
+        .btn-action-text {
+          font-size: 0.85rem;
         }
 
         .share-options {
           grid-template-columns: repeat(2, 1fr);
+        }
+
+        footer {
+          padding-bottom: 60px;
         }
       }
     </style>
@@ -1025,7 +1112,7 @@
       <footer>
         Offline Running · Provably Fair ·
         <a
-          href="https://github.com/gopherd/backgammon_provably_fair"
+          href="https://github.com/zeroplay-io/backgammon_provably_fair"
           target="_blank"
           rel="noopener"
         >
@@ -1560,7 +1647,7 @@
           // Auto-scroll to keep current verification visible
           rollItem.scrollIntoView({
             behavior: "smooth",
-            block: "center",
+            block: "nearest",
             inline: "nearest",
           });
 
@@ -1639,13 +1726,21 @@
 					</div>
 				</div>
 				<div class="action-buttons">
-					<button class="btn btn-game" onclick="replayGame()">
-						<span>🎮</span>
-						Replay Game
+					<button class="btn-action btn-game" onclick="replayGame()">
+						<div class="btn-action-icon">🎮</div>
+						<div class="btn-action-text">Replay Game</div>
 					</button>
-					<button class="btn btn-share" onclick="shareVerification()">
-						<span>📤</span>
-						Share Result
+					<button class="btn-action btn-share" onclick="shareVerification()">
+						<div class="btn-action-icon">
+							<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<circle cx="18" cy="5" r="3"></circle>
+								<circle cx="6" cy="12" r="3"></circle>
+								<circle cx="18" cy="19" r="3"></circle>
+								<line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+								<line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+							</svg>
+						</div>
+						<div class="btn-action-text">Share Result</div>
 					</button>
 				</div>
 			`;
@@ -1665,7 +1760,7 @@
         setTimeout(() => {
           finalResult.scrollIntoView({
             behavior: "smooth",
-            block: "center",
+            block: "start",
             inline: "nearest",
           });
         }, 200);
