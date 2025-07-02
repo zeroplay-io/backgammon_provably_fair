@@ -126,6 +126,45 @@
         display: none;
       }
 
+      .paste-area {
+        text-align: center;
+        padding: 24px;
+        border: 2px dashed var(--border);
+        border-radius: 8px;
+        background: var(--panel);
+      }
+
+      .paste-icon {
+        font-size: 2.5rem;
+        margin-bottom: 12px;
+        opacity: 0.7;
+      }
+
+      .paste-text {
+        font-size: 1.1rem;
+        color: var(--txt-muted);
+        margin-bottom: 16px;
+      }
+
+      #pasteInput {
+        width: 100%;
+        min-height: 120px;
+        background: white;
+        border: 1px solid var(--border);
+        color: var(--txt);
+        font: 13px/1.4 monospace;
+        padding: 12px;
+        border-radius: 6px;
+        resize: vertical;
+        margin-bottom: 12px;
+      }
+
+      #pasteInput:focus {
+        outline: none;
+        border-color: var(--accent);
+        box-shadow: 0 0 0 2px var(--accent-light);
+      }
+
       .upload-area {
         border: 2px dashed var(--border);
         border-radius: 8px;
@@ -164,45 +203,6 @@
       .upload-hint {
         font-size: 0.9rem;
         color: var(--txt-muted);
-      }
-
-      .paste-area {
-        text-align: center;
-        padding: 24px;
-        border: 2px dashed var(--border);
-        border-radius: 8px;
-        background: var(--panel);
-      }
-
-      .paste-icon {
-        font-size: 2.5rem;
-        margin-bottom: 12px;
-        opacity: 0.7;
-      }
-
-      .paste-text {
-        font-size: 1.1rem;
-        color: var(--txt-muted);
-        margin-bottom: 16px;
-      }
-
-      #pasteInput {
-        width: 100%;
-        min-height: 120px;
-        background: white;
-        border: 1px solid var(--border);
-        color: var(--txt);
-        font: 13px/1.4 monospace;
-        padding: 12px;
-        border-radius: 6px;
-        resize: vertical;
-        margin-bottom: 12px;
-      }
-
-      #pasteInput:focus {
-        outline: none;
-        border-color: var(--accent);
-        box-shadow: 0 0 0 2px var(--accent-light);
       }
 
       .hidden-textarea {
@@ -363,6 +363,31 @@
         word-break: break-all;
       }
 
+      .dice-comparison {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-top: 8px;
+      }
+
+      .dice-roll {
+        background: var(--panel);
+        padding: 8px 12px;
+        border-radius: 6px;
+        text-align: center;
+        font-weight: 600;
+      }
+
+      .dice-roll.match {
+        background: var(--accent-light);
+        color: var(--accent);
+      }
+
+      .dice-roll.mismatch {
+        background: var(--err-light);
+        color: var(--err);
+      }
+
       .rolls-container {
         max-height: 300px;
         overflow-y: auto;
@@ -484,25 +509,48 @@
         font-size: 0.9rem;
       }
 
-      .progress-bar {
-        width: 100%;
-        height: 4px;
-        background: var(--border);
-        border-radius: 2px;
+      .collapsible {
+        margin-top: 24px;
+      }
+
+      .collapsible-header {
+        display: flex;
+        align-items: center;
+        justify-content: between;
+        gap: 8px;
+        cursor: pointer;
+        padding: 12px;
+        background: var(--panel);
+        border-radius: 8px;
+        transition: all 0.2s;
+      }
+
+      .collapsible-header:hover {
+        background: #f1f5f9;
+      }
+
+      .collapsible-content {
+        max-height: 0;
         overflow: hidden;
-        margin-bottom: 24px;
-        display: none;
+        transition: max-height 0.3s ease;
       }
 
-      .progress-bar.show {
-        display: block;
+      .collapsible-content.open {
+        max-height: 400px;
       }
 
-      .progress-fill {
-        height: 100%;
-        background: var(--accent);
-        width: 0%;
-        transition: width 0.3s ease;
+      .raw-report {
+        background: #1e293b;
+        color: #e2e8f0;
+        font-family: "Monaco", "Menlo", monospace;
+        font-size: 0.8rem;
+        padding: 16px;
+        border-radius: 8px;
+        margin-top: 12px;
+        max-height: 300px;
+        overflow-y: auto;
+        white-space: pre-wrap;
+        border: 1px solid var(--border);
       }
 
       .final-result {
@@ -549,108 +597,41 @@
         color: var(--err);
       }
 
-      .stats {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: 16px;
-        margin-top: 16px;
-      }
-
-      .stat {
-        text-align: center;
-        padding: 16px;
-        background: var(--panel);
-        border-radius: 8px;
-      }
-
-      .stat-value {
-        font-size: 1.5rem;
-        font-weight: 700;
-        color: var(--accent);
-      }
-
-      .stat-label {
-        color: var(--txt-muted);
-        font-size: 0.9rem;
-      }
-
-      .collapsible {
-        margin-top: 24px;
-      }
-
-      .collapsible-header {
+      .action-buttons {
         display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 8px;
-        cursor: pointer;
-        padding: 12px;
-        background: var(--panel);
-        border-radius: 8px;
-        transition: all 0.2s;
+        gap: 12px;
+        justify-content: center;
+        margin-top: 20px;
       }
 
-      .collapsible-header:hover {
-        background: #f1f5f9;
+      .btn-game,
+      .btn-share {
+        padding: 10px 20px;
+        font-size: 0.95rem;
       }
 
-      .collapsible-header-left {
-        display: flex;
-        align-items: center;
-        gap: 8px;
+      .btn-game {
+        background: var(--info);
+        color: white;
       }
 
-      .collapsible-header-right {
-        display: flex;
-        align-items: center;
-        gap: 8px;
+      .btn-game:hover {
+        background: #2563eb;
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-lg);
       }
 
-      .copy-btn {
-        padding: 6px 12px;
-        font-size: 0.8rem;
+      .btn-share {
         background: var(--accent);
         color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: all 0.2s;
       }
 
-      .copy-btn:hover {
+      .btn-share:hover {
         background: #059669;
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-lg);
       }
 
-      .copy-btn.copied {
-        background: var(--accent);
-        animation: copySuccess 0.5s ease;
-      }
-
-      .collapsible-content {
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.3s ease;
-      }
-
-      .collapsible-content.open {
-        max-height: 400px;
-      }
-
-      .raw-report {
-        background: #1e293b;
-        color: #e2e8f0;
-        font-family: "Monaco", "Menlo", monospace;
-        font-size: 0.8rem;
-        padding: 16px;
-        border-radius: 8px;
-        margin-top: 12px;
-        max-height: 300px;
-        overflow-y: auto;
-        white-space: pre-wrap;
-        border: 1px solid var(--border);
-      }
-
-      /* Discord Share Modal */
       .modal-overlay {
         position: fixed;
         top: 0;
@@ -658,12 +639,11 @@
         right: 0;
         bottom: 0;
         background: rgba(0, 0, 0, 0.5);
-        backdrop-filter: blur(4px);
         display: none;
-        justify-content: center;
         align-items: center;
+        justify-content: center;
         z-index: 1000;
-        animation: fadeIn 0.3s ease;
+        padding: 20px;
       }
 
       .modal-overlay.show {
@@ -672,165 +652,115 @@
 
       .modal {
         background: white;
-        border-radius: 16px;
-        padding: 32px;
-        max-width: 500px;
-        width: 90%;
-        max-height: 80vh;
-        overflow-y: auto;
-        box-shadow: var(--shadow-lg);
-        animation: slideUp 0.3s ease;
+        border-radius: 12px;
+        padding: 20px;
+        max-width: 320px;
+        width: 100%;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
         position: relative;
+      }
+
+      .modal-header {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 16px;
+        text-align: center;
       }
 
       .modal-close {
         position: absolute;
-        top: 16px;
-        right: 16px;
-        width: 32px;
-        height: 32px;
+        top: 12px;
+        right: 12px;
+        background: none;
         border: none;
-        background: var(--panel);
-        border-radius: 50%;
+        font-size: 1.25rem;
         cursor: pointer;
+        color: var(--txt-muted);
+        width: 28px;
+        height: 28px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.2rem;
-        color: var(--txt-muted);
+        border-radius: 6px;
         transition: all 0.2s;
       }
 
       .modal-close:hover {
-        background: var(--border);
+        background: var(--panel);
         color: var(--txt);
-        transform: scale(1.1);
       }
 
-      .modal-header {
-        text-align: center;
-        margin-bottom: 24px;
+      .share-options {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-top: 16px;
       }
 
-      .modal-icon {
-        font-size: 3rem;
-        margin-bottom: 12px;
-      }
-
-      .modal-title {
-        font-size: 1.5rem;
-        font-weight: 700;
-        color: var(--txt);
-        margin-bottom: 8px;
-      }
-
-      .modal-subtitle {
-        color: var(--txt-muted);
-        font-size: 1rem;
-      }
-
-      .discord-preview {
-        background: #2c2f33;
+      .share-option {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 12px 6px;
+        border: 1px solid var(--border);
         border-radius: 8px;
-        padding: 16px;
-        margin: 20px 0;
-        color: #dcddde;
-        font-family: "Whitney", "Helvetica Neue", Helvetica, Arial, sans-serif;
-        font-size: 0.875rem;
-        line-height: 1.3;
-        border-left: 4px solid var(--accent);
+        cursor: pointer;
+        transition: all 0.2s;
+        text-decoration: none;
+        color: var(--txt);
       }
 
-      .discord-header {
+      .share-option:hover {
+        background: var(--panel);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow);
+      }
+
+      .share-icon {
+        width: 32px;
+        height: 32px;
+        margin-bottom: 6px;
         display: flex;
         align-items: center;
-        gap: 8px;
-        margin-bottom: 8px;
+        justify-content: center;
       }
 
-      .discord-avatar {
-        width: 20px;
-        height: 20px;
+      .share-icon svg {
+        width: 100%;
+        height: 100%;
+      }
+
+      .share-label {
+        font-size: 0.85rem;
+      }
+
+      .floating-btn {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        width: 56px;
+        height: 56px;
         border-radius: 50%;
         background: var(--accent);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.7rem;
-        font-weight: bold;
-      }
-
-      .discord-username {
-        font-weight: 600;
-        color: #ffffff;
-      }
-
-      .discord-content {
-        margin: 8px 0;
-      }
-
-      .discord-embed {
-        background: #36393f;
-        border-radius: 4px;
-        padding: 12px;
-        margin-top: 8px;
-        border-left: 4px solid var(--accent);
-      }
-
-      .embed-title {
-        font-weight: 600;
-        color: #ffffff;
-        margin-bottom: 4px;
-      }
-
-      .embed-description {
-        color: #dcddde;
-        font-size: 0.8rem;
-      }
-
-      .embed-fields {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 8px;
-        margin-top: 8px;
-      }
-
-      .embed-field {
-        background: #2c2f33;
-        padding: 6px 8px;
-        border-radius: 3px;
-      }
-
-      .embed-field-name {
-        font-size: 0.7rem;
-        font-weight: 600;
-        color: #b9bbbe;
-        text-transform: uppercase;
-      }
-
-      .embed-field-value {
-        font-size: 0.75rem;
-        color: #dcddde;
-      }
-
-      .modal-actions {
-        display: flex;
-        gap: 8px;
-        justify-content: center;
-        margin-top: 24px;
-        flex-wrap: wrap;
-      }
-
-      .btn-discord {
-        background: #5865f2;
         color: white;
-        display: inline-flex;
+        border: none;
+        box-shadow: var(--shadow-lg);
+        cursor: pointer;
+        display: none;
         align-items: center;
-        gap: 8px;
+        justify-content: center;
+        font-size: 1.5rem;
+        transition: all 0.2s;
+        z-index: 100;
       }
 
-      .btn-discord:hover {
-        background: #4752c4;
+      .floating-btn.show {
+        display: flex;
+      }
+
+      .floating-btn:hover {
+        transform: scale(1.1);
+        background: #059669;
       }
 
       @keyframes pulse {
@@ -855,36 +785,50 @@
         }
       }
 
-      @keyframes copySuccess {
-        0% {
-          transform: scale(1);
-        }
-        50% {
-          transform: scale(1.1);
-        }
-        100% {
-          transform: scale(1);
-        }
+      .progress-bar {
+        width: 100%;
+        height: 4px;
+        background: var(--border);
+        border-radius: 2px;
+        overflow: hidden;
+        margin-bottom: 24px;
+        display: none;
       }
 
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-        }
-        to {
-          opacity: 1;
-        }
+      .progress-bar.show {
+        display: block;
       }
 
-      @keyframes slideUp {
-        from {
-          opacity: 0;
-          transform: translateY(30px) scale(0.95);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0) scale(1);
-        }
+      .progress-fill {
+        height: 100%;
+        background: var(--accent);
+        width: 0%;
+        transition: width 0.3s ease;
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 16px;
+        margin-top: 16px;
+      }
+
+      .stat {
+        text-align: center;
+        padding: 16px;
+        background: var(--panel);
+        border-radius: 8px;
+      }
+
+      .stat-value {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--accent);
+      }
+
+      .stat-label {
+        color: var(--txt-muted);
+        font-size: 0.9rem;
       }
 
       footer {
@@ -923,21 +867,12 @@
           justify-content: center;
         }
 
-        .modal {
-          padding: 24px 20px;
-          margin: 20px;
+        .action-buttons {
+          flex-direction: column;
         }
 
-        .modal-close {
-          top: 12px;
-          right: 12px;
-          width: 28px;
-          height: 28px;
-          font-size: 1rem;
-        }
-
-        .embed-fields {
-          grid-template-columns: 1fr;
+        .share-options {
+          grid-template-columns: repeat(2, 1fr);
         }
       }
     </style>
@@ -1079,80 +1014,11 @@
 
       <div class="card collapsible" id="rawReportSection" style="display: none">
         <div class="collapsible-header" id="rawReportToggle">
-          <div class="collapsible-header-left">
-            <span>📋 Raw Report Data</span>
-          </div>
-          <div class="collapsible-header-right">
-            <button class="copy-btn" id="copyBtn">📋 Copy</button>
-            <span id="collapseIcon">▼</span>
-          </div>
+          <span>📋 Raw Report Data</span>
+          <span style="margin-left: auto">▼</span>
         </div>
         <div class="collapsible-content" id="rawReportContent">
           <div class="raw-report" id="rawReport"></div>
-        </div>
-      </div>
-
-      <!-- Discord Share Modal -->
-      <div class="modal-overlay" id="discordModal">
-        <div class="modal">
-          <button class="modal-close" id="closeModalBtn" title="Close">
-            ✕
-          </button>
-
-          <div class="modal-header">
-            <div class="modal-icon">🎉</div>
-            <div class="modal-title">Verification Complete!</div>
-            <div class="modal-subtitle">Share your verified fairness proof</div>
-          </div>
-
-          <div class="discord-preview">
-            <div class="discord-header">
-              <div class="discord-avatar">🎲</div>
-              <span class="discord-username">FairnessBot</span>
-            </div>
-            <div class="discord-content">
-              Just verified my game's fairness! 🎯
-            </div>
-            <div class="discord-embed">
-              <div class="embed-title">✅ Provably Fair Verification</div>
-              <div class="embed-description">
-                All dice rolls cryptographically verified
-              </div>
-              <div class="embed-fields">
-                <div class="embed-field">
-                  <div class="embed-field-name">Game ID</div>
-                  <div class="embed-field-value" id="embedGameId">
-                    Loading...
-                  </div>
-                </div>
-                <div class="embed-field">
-                  <div class="embed-field-name">Rolls Verified</div>
-                  <div class="embed-field-value" id="embedRollCount">
-                    Loading...
-                  </div>
-                </div>
-                <div class="embed-field">
-                  <div class="embed-field-name">Fairness Score</div>
-                  <div class="embed-field-value">100% ✅</div>
-                </div>
-                <div class="embed-field">
-                  <div class="embed-field-name">Crypto Standard</div>
-                  <div class="embed-field-value">SHA-256 HMAC</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="modal-actions">
-            <button class="btn btn-discord" id="shareDiscordBtn">
-              <span>💬</span>
-              Join Our Discord
-            </button>
-            <button class="btn btn-secondary" id="shareAnywhereBtn">
-              <span>🌐</span>
-              Share Anywhere
-            </button>
-          </div>
         </div>
       </div>
 
@@ -1168,10 +1034,91 @@
       </footer>
     </div>
 
+    <!-- Floating button to reopen results -->
+    <button
+      class="floating-btn"
+      id="floatingBtn"
+      title="Show Verification Results"
+    >
+      🎯
+    </button>
+
+    <!-- Share modal -->
+    <div class="modal-overlay" id="shareModal">
+      <div class="modal">
+        <button class="modal-close" id="closeShareModal">&times;</button>
+        <div class="modal-header">Share Verification</div>
+        <div class="share-options" id="shareOptions">
+          <a href="#" class="share-option" data-platform="twitter">
+            <div class="share-icon">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"
+                />
+              </svg>
+            </div>
+            <div class="share-label">Twitter</div>
+          </a>
+          <a href="#" class="share-option" data-platform="facebook">
+            <div class="share-icon">
+              <svg viewBox="0 0 24 24" fill="#1877F2">
+                <path
+                  d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
+                />
+              </svg>
+            </div>
+            <div class="share-label">Facebook</div>
+          </a>
+          <a href="#" class="share-option" data-platform="whatsapp">
+            <div class="share-icon">
+              <svg viewBox="0 0 24 24" fill="#25D366">
+                <path
+                  d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"
+                />
+              </svg>
+            </div>
+            <div class="share-label">WhatsApp</div>
+          </a>
+          <a href="#" class="share-option" data-platform="telegram">
+            <div class="share-icon">
+              <svg viewBox="0 0 24 24" fill="#229ED9">
+                <path
+                  d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"
+                />
+              </svg>
+            </div>
+            <div class="share-label">Telegram</div>
+          </a>
+          <a href="#" class="share-option" data-platform="reddit">
+            <div class="share-icon">
+              <svg viewBox="0 0 24 24" fill="#FF4500">
+                <path
+                  d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"
+                />
+              </svg>
+            </div>
+            <div class="share-label">Reddit</div>
+          </a>
+          <a href="#" class="share-option" data-platform="copy">
+            <div class="share-icon">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"
+                />
+              </svg>
+            </div>
+            <div class="share-label">Copy Link</div>
+          </a>
+        </div>
+      </div>
+    </div>
+
     <script src="wasm_exec.js"></script>
     <script>
       const go = new Go();
       let wasmReady = false;
+      let currentGameId = null;
+      let currentReport = null;
 
       WebAssembly.instantiateStreaming(
         fetch("verifier.wasm"),
@@ -1191,7 +1138,6 @@
       const verifyBtn = $("verifyBtn");
       const clearBtn = $("clearBtn");
       const pasteBtn = $("pasteBtn");
-      const copyBtn = $("copyBtn");
       const fileTab = $("fileTab");
       const pasteTab = $("pasteTab");
       const fileMethod = $("fileMethod");
@@ -1203,12 +1149,9 @@
       const rawReportSection = $("rawReportSection");
       const rawReportToggle = $("rawReportToggle");
       const rawReportContent = $("rawReportContent");
-      const collapseIcon = $("collapseIcon");
-      const discordModal = $("discordModal");
-      const shareDiscordBtn = $("shareDiscordBtn");
-      const shareAnywhereBtn = $("shareAnywhereBtn");
-      const copyMessageBtn = $("copyMessageBtn");
-      const closeModalBtn = $("closeModalBtn");
+      const floatingBtn = $("floatingBtn");
+      const shareModal = $("shareModal");
+      const closeShareModal = $("closeShareModal");
 
       // Tab switching
       fileTab.addEventListener("click", () => {
@@ -1301,14 +1244,40 @@
       verifyBtn.addEventListener("click", startVerification);
       clearBtn.addEventListener("click", clearAll);
 
-      rawReportToggle.addEventListener("click", (e) => {
-        // Don't toggle if clicking the copy button
-        if (e.target.closest(".copy-btn")) return;
-
+      rawReportToggle.addEventListener("click", () => {
         const content = rawReportContent;
         const isOpen = content.classList.contains("open");
         content.classList.toggle("open");
-        collapseIcon.textContent = isOpen ? "▼" : "▲";
+        rawReportToggle.querySelector("span:last-child").textContent = isOpen
+          ? "▼"
+          : "▲";
+      });
+
+      // Floating button
+      floatingBtn.addEventListener("click", () => {
+        if (currentGameId) {
+          showSuccessWithActions(currentReport.rolls.length / 2);
+        }
+      });
+
+      // Share modal
+      closeShareModal.addEventListener("click", () => {
+        shareModal.classList.remove("show");
+      });
+
+      shareModal.addEventListener("click", (e) => {
+        if (e.target === shareModal) {
+          shareModal.classList.remove("show");
+        }
+      });
+
+      // Share options
+      document.querySelectorAll(".share-option").forEach((option) => {
+        option.addEventListener("click", (e) => {
+          e.preventDefault();
+          const platform = option.getAttribute("data-platform");
+          handleShare(platform);
+        });
       });
 
       function handleFileContent(content) {
@@ -1325,6 +1294,8 @@
       function clearAll() {
         input.value = "";
         pasteInput.value = "";
+        currentGameId = null;
+        currentReport = null;
         uploadArea.innerHTML = `
 				<div class="upload-icon">📄</div>
 				<div class="upload-text">Drop your report file here or click to select</div>
@@ -1335,191 +1306,9 @@
         progressBar.classList.remove("show");
         finalResult.classList.remove("show");
         rawReportSection.style.display = "none";
-        discordModal.classList.remove("show");
+        floatingBtn.classList.remove("show");
         resetSteps();
       }
-
-      // Copy button functionality
-      function setupCopyButton() {
-        copyBtn.addEventListener("click", async (e) => {
-          e.stopPropagation();
-          try {
-            await navigator.clipboard.writeText($("rawReport").textContent);
-            copyBtn.textContent = "✅ Copied";
-            copyBtn.classList.add("copied");
-            setTimeout(() => {
-              copyBtn.textContent = "📋 Copy";
-              copyBtn.classList.remove("copied");
-            }, 2000);
-          } catch (err) {
-            // Fallback for older browsers
-            const textArea = document.createElement("textarea");
-            textArea.value = $("rawReport").textContent;
-            document.body.appendChild(textArea);
-            textArea.select();
-            document.execCommand("copy");
-            document.body.removeChild(textArea);
-
-            copyBtn.textContent = "✅ Copied";
-            copyBtn.classList.add("copied");
-            setTimeout(() => {
-              copyBtn.textContent = "📋 Copy";
-              copyBtn.classList.remove("copied");
-            }, 2000);
-          }
-        });
-      }
-
-      // Discord modal functionality
-      function setupDiscordModal() {
-        closeModalBtn.addEventListener("click", () => {
-          discordModal.classList.remove("show");
-        });
-
-        // 配置区域 - 在这里设置你的Discord服务器信息
-        const DISCORD_CONFIG = {
-          // 你的Discord服务器邀请链接（推荐）
-          inviteUrl: "https://discord.gg/YOUR_INVITE_CODE", // 替换为你的邀请链接
-
-          // 或者直接链接到特定频道（可选）
-          channelUrl:
-            "https://discord.com/channels/YOUR_SERVER_ID/YOUR_CHANNEL_ID",
-
-          // 服务器名称（用于显示）
-          serverName: "Your Game Community", // 替换为你的服务器名称
-        };
-
-        // 加入官方Discord社区
-        shareDiscordBtn.addEventListener("click", () => {
-          // 复制消息到剪贴板
-          copyDiscordMessage();
-
-          // 打开Discord邀请链接（推荐方式）
-          window.open(DISCORD_CONFIG.inviteUrl, "_blank");
-
-          // 更新按钮状态
-          shareDiscordBtn.innerHTML = "<span>✅</span>Opening Discord!";
-          setTimeout(() => {
-            shareDiscordBtn.innerHTML = "<span>💬</span>Join Our Discord";
-          }, 3000);
-
-          // 显示提示
-          showToast(
-            `Opening ${DISCORD_CONFIG.serverName}! Message copied to clipboard. 🎉`
-          );
-        });
-
-        // 分享到任意地方
-        shareAnywhereBtn.addEventListener("click", () => {
-          // 复制消息
-          copyDiscordMessage();
-
-          // 打开Discord主页面，让用户自己选择
-          window.open("https://discord.com/channels/@me", "_blank");
-
-          // 更新按钮状态
-          shareAnywhereBtn.innerHTML = "<span>✅</span>Discord Opened!";
-          setTimeout(() => {
-            shareAnywhereBtn.innerHTML = "<span>🌐</span>Share Anywhere";
-          }, 3000);
-
-          showToast("Discord opened! Choose any server/channel to share. 📋");
-        });
-
-        function copyDiscordMessage() {
-          const report = JSON.parse(input.value);
-          const rollCount = report.rolls.length / 2;
-
-          const message =
-            `🎲 **Provably Fair Verification Complete!** ✅\n\n` +
-            `**Game ID:** ${report.game_id}\n` +
-            `**Rolls Verified:** ${rollCount}\n` +
-            `**Fairness Score:** 100% ✅\n` +
-            `**Crypto Standard:** SHA-256 HMAC\n\n` +
-            `All dice rolls have been cryptographically verified using the open-source verifier!\n` +
-            `🔗 Verify yourself: ${window.location.origin}`;
-
-          navigator.clipboard
-            .writeText(message)
-            .then(() => {})
-            .catch(() => {
-              // Fallback for older browsers
-              const textArea = document.createElement("textarea");
-              textArea.value = message;
-              document.body.appendChild(textArea);
-              textArea.select();
-              document.execCommand("copy");
-              document.body.removeChild(textArea);
-
-              copyMessageBtn.innerHTML = "<span>✅</span>Copied!";
-              setTimeout(() => {
-                copyMessageBtn.innerHTML = "<span>📋</span>Copy Message";
-              }, 2000);
-            });
-        }
-
-        // Close modal when clicking overlay
-        discordModal.addEventListener("click", (e) => {
-          if (e.target === discordModal) {
-            discordModal.classList.remove("show");
-          }
-        });
-      }
-
-      // Toast notification function
-      function showToast(message) {
-        // Remove existing toast if any
-        const existingToast = document.querySelector(".toast");
-        if (existingToast) existingToast.remove();
-
-        const toast = document.createElement("div");
-        toast.className = "toast";
-        toast.textContent = message;
-        toast.style.cssText = `
-				position: fixed;
-				bottom: 20px;
-				right: 20px;
-				background: var(--accent);
-				color: white;
-				padding: 12px 20px;
-				border-radius: 8px;
-				box-shadow: var(--shadow-lg);
-				z-index: 1001;
-				animation: slideInUp 0.3s ease;
-				max-width: 300px;
-				font-size: 0.9rem;
-				line-height: 1.4;
-			`;
-
-        // Add animation keyframes if not already present
-        if (!document.querySelector("#toastStyle")) {
-          const style = document.createElement("style");
-          style.id = "toastStyle";
-          style.textContent = `
-					@keyframes slideInUp {
-						from { transform: translateY(100%); opacity: 0; }
-						to { transform: translateY(0); opacity: 1; }
-					}
-					@keyframes slideOutDown {
-						from { transform: translateY(0); opacity: 1; }
-						to { transform: translateY(100%); opacity: 0; }
-					}
-				`;
-          document.head.appendChild(style);
-        }
-
-        document.body.appendChild(toast);
-
-        // Auto remove after 4 seconds
-        setTimeout(() => {
-          toast.style.animation = "slideOutDown 0.3s ease forwards";
-          setTimeout(() => toast.remove(), 300);
-        }, 4000);
-      }
-
-      // Initialize event listeners
-      setupCopyButton();
-      setupDiscordModal();
 
       function resetSteps() {
         for (let i = 1; i <= 4; i++) {
@@ -1582,10 +1371,13 @@
         verificationSteps.classList.add("show");
         progressBar.classList.add("show");
         finalResult.classList.remove("show");
+        floatingBtn.classList.remove("show");
         resetSteps();
 
         try {
           const report = JSON.parse(input.value);
+          currentReport = report;
+          currentGameId = report.game_id;
           await simulateVerificationProcess(report);
         } catch (error) {
           showError("Invalid JSON format: " + error.message);
@@ -1823,10 +1615,10 @@
 
         // Show final success result
         await sleep(800);
-        showSuccess(rollCount);
+        showSuccessWithActions(rollCount);
       }
 
-      function showSuccess(rollCount) {
+      function showSuccessWithActions(rollCount) {
         finalResult.className = "final-result success show";
         finalResult.innerHTML = `
 				<div class="result-icon">🎉</div>
@@ -1846,6 +1638,16 @@
 						<div class="stat-label">Crypto Standard</div>
 					</div>
 				</div>
+				<div class="action-buttons">
+					<button class="btn btn-game" onclick="replayGame()">
+						<span>🎮</span>
+						Replay Game
+					</button>
+					<button class="btn btn-share" onclick="shareVerification()">
+						<span>📤</span>
+						Share Result
+					</button>
+				</div>
 			`;
 
         // Show raw report section
@@ -1856,6 +1658,9 @@
           2
         );
 
+        // Show floating button for future access
+        floatingBtn.classList.add("show");
+
         // Auto-scroll to final result
         setTimeout(() => {
           finalResult.scrollIntoView({
@@ -1863,15 +1668,7 @@
             block: "center",
             inline: "nearest",
           });
-        }, 100);
-
-        // Show Discord modal after a delay
-        setTimeout(() => {
-          const report = JSON.parse(input.value);
-          $("embedGameId").textContent = report.game_id;
-          $("embedRollCount").textContent = rollCount.toString();
-          discordModal.classList.add("show");
-        }, 1000);
+        }, 200);
       }
 
       function showError(message) {
@@ -1894,6 +1691,85 @@
             inline: "nearest",
           });
         }, 200);
+      }
+
+      function replayGame() {
+        if (currentGameId) {
+          const replayUrl = `https://backgammon-go.onelink.me/4n1X?bg_type=report&bg_platform=fairness_verifier&bg_match=${currentGameId}`;
+          window.open(replayUrl, "_blank");
+        }
+      }
+
+      async function shareVerification() {
+        const shareUrl = window.location.href;
+        const shareTitle = "Backgammon Game Verification";
+        const shareText = `I've verified the fairness of my backgammon game #${currentGameId}. All dice rolls were cryptographically proven to be fair!`;
+
+        // Check if on mobile device
+        const isMobile =
+          /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+            navigator.userAgent
+          );
+
+        // Try native share only on mobile devices
+        if (isMobile && navigator.share) {
+          try {
+            await navigator.share({
+              title: shareTitle,
+              text: shareText,
+              url: shareUrl,
+            });
+            return; // Success - don't show custom modal
+          } catch (err) {
+            // User cancelled or error occurred
+            if (err.name === "AbortError") {
+              // User cancelled, don't show modal
+              return;
+            }
+            // Other error, fall through to show custom modal
+            console.log("Native share failed:", err);
+          }
+        }
+
+        // Show manual share options for desktop or if native share failed
+        shareModal.classList.add("show");
+      }
+
+      function handleShare(platform) {
+        const shareUrl = encodeURIComponent(window.location.href);
+        const shareText = encodeURIComponent(
+          `I've verified the fairness of my backgammon game #${currentGameId}. All dice rolls were cryptographically proven to be fair!`
+        );
+        let targetUrl = "";
+
+        switch (platform) {
+          case "twitter":
+            targetUrl = `https://twitter.com/intent/tweet?text=${shareText}&url=${shareUrl}`;
+            break;
+          case "facebook":
+            targetUrl = `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`;
+            break;
+          case "whatsapp":
+            targetUrl = `https://wa.me/?text=${shareText}%20${shareUrl}`;
+            break;
+          case "telegram":
+            targetUrl = `https://t.me/share/url?url=${shareUrl}&text=${shareText}`;
+            break;
+          case "reddit":
+            targetUrl = `https://reddit.com/submit?url=${shareUrl}&title=${shareText}`;
+            break;
+          case "copy":
+            navigator.clipboard.writeText(window.location.href).then(() => {
+              alert("Link copied to clipboard!");
+            });
+            shareModal.classList.remove("show");
+            return;
+        }
+
+        if (targetUrl) {
+          window.open(targetUrl, "_blank");
+          shareModal.classList.remove("show");
+        }
       }
 
       function sleep(ms) {
@@ -1930,6 +1806,10 @@
           console.error("Failed to decode report param:", e);
         }
       }
+
+      // Make functions globally accessible
+      window.replayGame = replayGame;
+      window.shareVerification = shareVerification;
     </script>
   </body>
 </html>
