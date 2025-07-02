@@ -436,6 +436,7 @@
         border-bottom: 1px solid var(--border);
         transition: all 0.2s;
         opacity: 0.4;
+        gap: 8px;
       }
 
       .roll-item:last-child {
@@ -464,17 +465,19 @@
         font-weight: 600;
         color: var(--txt-muted);
         font-size: 0.9rem;
+        flex-shrink: 0;
       }
 
       .roll-dice {
         display: flex;
-        gap: 8px;
+        gap: 6px;
         flex: 1;
+        min-width: 0;
       }
 
       .die {
-        width: 32px;
-        height: 32px;
+        width: 28px;
+        height: 28px;
         background: white;
         border: 2px solid var(--border);
         border-radius: 6px;
@@ -482,7 +485,8 @@
         align-items: center;
         justify-content: center;
         font-weight: bold;
-        font-size: 1.1rem;
+        font-size: 0.95rem;
+        flex-shrink: 0;
       }
 
       .die.match {
@@ -498,16 +502,18 @@
       }
 
       .vs-label {
-        margin: 0 12px;
+        margin: 0 8px;
         color: var(--txt-muted);
-        font-size: 0.9rem;
+        font-size: 0.8rem;
+        flex-shrink: 0;
       }
 
       .roll-status {
-        width: 80px;
+        width: 70px;
         text-align: center;
-        font-size: 0.9rem;
+        font-size: 0.8rem;
         font-weight: 600;
+        flex-shrink: 0;
       }
 
       .roll-status.verifying {
@@ -549,7 +555,7 @@
       .collapsible-header {
         display: flex;
         align-items: center;
-        justify-content: between;
+        justify-content: space-between;
         gap: 8px;
         cursor: pointer;
         padding: 12px;
@@ -560,6 +566,31 @@
 
       .collapsible-header:hover {
         background: #f1f5f9;
+      }
+
+      .copy-btn {
+        background: var(--accent);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        padding: 8px 16px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .copy-btn:hover {
+        background: #059669;
+        transform: translateY(-1px);
+      }
+
+      .copy-btn.copied {
+        background: var(--accent);
+        color: white;
       }
 
       .collapsible-content {
@@ -750,6 +781,59 @@
         width: 100%;
         box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
         position: relative;
+      }
+
+      /* Loading overlay */
+      .loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        transition: opacity 0.5s ease;
+      }
+
+      .loading-overlay.hide {
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .loading-spinner {
+        width: 60px;
+        height: 60px;
+        border: 4px solid var(--border);
+        border-top: 4px solid var(--accent);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin-bottom: 20px;
+      }
+
+      .loading-text {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--txt);
+        margin-bottom: 8px;
+      }
+
+      .loading-subtitle {
+        font-size: 0.9rem;
+        color: var(--txt-muted);
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
       }
 
       .modal-header {
@@ -989,6 +1073,31 @@
           grid-template-columns: repeat(2, 1fr);
         }
 
+        .roll-number {
+          width: 35px;
+          font-size: 0.8rem;
+        }
+
+        .roll-dice {
+          gap: 4px;
+        }
+
+        .die {
+          width: 24px;
+          height: 24px;
+          font-size: 0.85rem;
+        }
+
+        .vs-label {
+          margin: 0 6px;
+          font-size: 0.75rem;
+        }
+
+        .roll-status {
+          width: 60px;
+          font-size: 0.75rem;
+        }
+
         footer {
           padding-bottom: 60px;
         }
@@ -997,6 +1106,13 @@
   </head>
 
   <body>
+    <!-- Loading overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+      <div class="loading-spinner"></div>
+      <div class="loading-text">Loading Verification Engine</div>
+      <div class="loading-subtitle">Initializing cryptographic modules...</div>
+    </div>
+
     <div class="container">
       <div class="header">
         <h1 class="title">🎲 Fairness Verifier</h1>
@@ -1133,7 +1249,13 @@
       <div class="card collapsible" id="rawReportSection" style="display: none">
         <div class="collapsible-header" id="rawReportToggle">
           <span>📋 Raw Report Data</span>
-          <span style="margin-left: auto">▼</span>
+          <div style="display: flex; align-items: center; gap: 12px">
+            <button class="copy-btn" id="copyReportBtn">
+              <span>📋</span>
+              <span>Copy</span>
+            </button>
+            <span>▼</span>
+          </div>
         </div>
         <div class="collapsible-content" id="rawReportContent">
           <div class="raw-report" id="rawReport"></div>
@@ -1244,6 +1366,13 @@
       ).then((r) => {
         go.run(r.instance);
         wasmReady = true;
+        // Hide loading overlay
+        setTimeout(() => {
+          loadingOverlay.classList.add("hide");
+          setTimeout(() => {
+            loadingOverlay.style.display = "none";
+          }, 500);
+        }, 800);
         maybeAutoVerify();
       });
 
@@ -1270,6 +1399,8 @@
       const floatingBtn = $("floatingBtn");
       const shareModal = $("shareModal");
       const closeShareModal = $("closeShareModal");
+      const loadingOverlay = $("loadingOverlay");
+      const copyReportBtn = $("copyReportBtn");
 
       // Tab switching
       fileTab.addEventListener("click", () => {
@@ -1362,13 +1493,33 @@
       verifyBtn.addEventListener("click", startVerification);
       clearBtn.addEventListener("click", clearAll);
 
-      rawReportToggle.addEventListener("click", () => {
+      rawReportToggle.addEventListener("click", (e) => {
+        // Don't toggle if clicking the copy button
+        if (e.target.closest(".copy-btn")) return;
+
         const content = rawReportContent;
         const isOpen = content.classList.contains("open");
         content.classList.toggle("open");
-        rawReportToggle.querySelector("span:last-child").textContent = isOpen
-          ? "▼"
-          : "▲";
+        const arrow = rawReportToggle.querySelector("span:last-child");
+        arrow.textContent = isOpen ? "▼" : "▲";
+      });
+
+      // Copy report button
+      copyReportBtn.addEventListener("click", async (e) => {
+        e.stopPropagation();
+        try {
+          await navigator.clipboard.writeText($("rawReport").textContent);
+          const originalContent = copyReportBtn.innerHTML;
+          copyReportBtn.innerHTML = "<span>✅</span><span>Copied!</span>";
+          copyReportBtn.classList.add("copied");
+
+          setTimeout(() => {
+            copyReportBtn.innerHTML = originalContent;
+            copyReportBtn.classList.remove("copied");
+          }, 2000);
+        } catch (err) {
+          alert("Failed to copy to clipboard");
+        }
       });
 
       // Floating button
@@ -1734,6 +1885,11 @@
         // Show final success result
         await sleep(800);
         showSuccessWithActions(rollCount);
+
+        // Auto-show share modal after 1 second
+        setTimeout(() => {
+          shareModal.classList.add("show");
+        }, 1000);
       }
 
       function showSuccessWithActions(rollCount) {
@@ -1758,7 +1914,11 @@
 				</div>
 				<div class="action-buttons">
 					<button class="btn-action btn-game" onclick="replayGame()">
-						<div class="btn-action-icon">🎮</div>
+						<div class="btn-action-icon">
+							<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<polygon points="5,3 19,12 5,21"></polygon>
+							</svg>
+						</div>
 						<div class="btn-action-text">Replay Game</div>
 					</button>
 					<button class="btn-action btn-share" onclick="shareVerification()">
