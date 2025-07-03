@@ -872,6 +872,11 @@
         gap: 10px;
         margin-top: 16px;
       }
+      @media (orientation: portrait) {
+        .share-options {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
 
       .share-option {
         display: flex;
@@ -1067,10 +1072,6 @@
 
         .btn-action-text {
           font-size: 0.85rem;
-        }
-
-        .share-options {
-          grid-template-columns: repeat(2, 1fr);
         }
 
         .roll-number {
