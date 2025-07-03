@@ -1551,16 +1551,18 @@
         }
       });
 
+      function isMobile() {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+          navigator.userAgent
+        );
+      }
+
       // Update share modal content based on device capabilities
       function updateShareModal() {
-        const isMobile =
-          /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-            navigator.userAgent
-          );
         const copyShareOption = document.getElementById("copyShareOption");
         const copyShareLabel = document.getElementById("copyShareLabel");
 
-        if (isMobile && navigator.share && copyShareOption && copyShareLabel) {
+        if (navigator.share && copyShareOption && copyShareLabel) {
           // Change "Copy Link" to "Other" on mobile devices with native share support
           copyShareLabel.textContent = "Other";
           copyShareOption.querySelector(".share-icon").innerHTML = `
@@ -1946,12 +1948,6 @@
         // Show final success result
         await sleep(800);
         showSuccessWithActions(rollCount);
-
-        // Auto-show share modal after 1 second
-        setTimeout(() => {
-          updateShareModal();
-          shareModal.classList.add("show");
-        }, 1000);
       }
 
       function showSuccessWithActions(rollCount) {
@@ -2050,9 +2046,34 @@
         }
       }
 
+      function nativeShare() {
+        // Use native share on mobile
+        const shareTitle = "Backgammon Game Verification";
+        const shareTextDecoded = `I've verified the fairness of my backgammon game #${currentGameId}. All dice rolls were cryptographically proven to be fair!`;
+
+        navigator
+          .share({
+            title: shareTitle,
+            text: shareTextDecoded,
+            url: window.location.href,
+          })
+          .catch((err) => {
+            // If native share fails, fall back to copy
+            navigator.clipboard.writeText(window.location.href).then(() => {
+              alert("Link copied to clipboard!");
+            });
+          });
+      }
+
       async function shareVerification() {
-        // Always show manual share options instead of trying native share first
-        shareModal.classList.add("show");
+        if (isMobile() && navigator.share) {
+          // If on mobile with native share support, show share options
+          nativeShare();
+        } else {
+          // Otherwise, just show the manual share modal
+          updateShareModal();
+          shareModal.classList.add("show");
+        }
       }
 
       function handleShare(platform) {
@@ -2082,30 +2103,8 @@
             break;
           case "copy":
             // Check if mobile device supports native share
-            const isMobile =
-              /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-                navigator.userAgent
-              );
-
-            if (isMobile && navigator.share) {
-              // Use native share on mobile
-              const shareTitle = "Backgammon Game Verification";
-              const shareTextDecoded = `I've verified the fairness of my backgammon game #${currentGameId}. All dice rolls were cryptographically proven to be fair!`;
-
-              navigator
-                .share({
-                  title: shareTitle,
-                  text: shareTextDecoded,
-                  url: window.location.href,
-                })
-                .catch((err) => {
-                  // If native share fails, fall back to copy
-                  navigator.clipboard
-                    .writeText(window.location.href)
-                    .then(() => {
-                      alert("Link copied to clipboard!");
-                    });
-                });
+            if (isMobile() && navigator.share) {
+              nativeShare();
             } else {
               // Copy to clipboard on desktop
               navigator.clipboard.writeText(window.location.href).then(() => {
