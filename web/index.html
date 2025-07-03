@@ -666,6 +666,7 @@
         gap: 16px;
         justify-content: center;
         margin-top: 32px;
+        margin-bottom: 32px;
       }
 
       .btn-action {
@@ -1956,16 +1957,6 @@
 				<div class="result-icon">🎉</div>
 				<div class="result-title">Verification Successful!</div>
 				<div class="result-description">All ${rollCount} dice rolls have been cryptographically verified</div>
-				<div class="stats">
-					<div class="stat">
-						<div class="stat-value">${rollCount}</div>
-						<div class="stat-label">Rolls Verified</div>
-					</div>
-					<div class="stat">
-						<div class="stat-value">100%</div>
-						<div class="stat-label">Fairness Score</div>
-					</div>
-				</div>
 				<div class="action-buttons">
 					<button class="btn-action btn-game" onclick="replayGame()">
 						<div class="btn-action-icon">
@@ -1987,6 +1978,16 @@
 						</div>
 						<div class="btn-action-text">Share Result</div>
 					</button>
+				</div>
+				<div class="stats">
+					<div class="stat">
+						<div class="stat-value">${rollCount}</div>
+						<div class="stat-label">Rolls Verified</div>
+					</div>
+					<div class="stat">
+						<div class="stat-value">100%</div>
+						<div class="stat-label">Fairness Score</div>
+					</div>
 				</div>
 			`;
 
@@ -2057,12 +2058,7 @@
             text: shareTextDecoded,
             url: window.location.href,
           })
-          .catch((err) => {
-            // If native share fails, fall back to copy
-            navigator.clipboard.writeText(window.location.href).then(() => {
-              alert("Link copied to clipboard!");
-            });
-          });
+          .catch((err) => {});
       }
 
       async function shareVerification() {
@@ -2103,7 +2099,7 @@
             break;
           case "copy":
             // Check if mobile device supports native share
-            if (isMobile() && navigator.share) {
+            if (navigator.share) {
               nativeShare();
             } else {
               // Copy to clipboard on desktop
@@ -2111,7 +2107,7 @@
                 alert("Link copied to clipboard!");
               });
             }
-            shareModal.classList.remove("show");
+            //shareModal.classList.remove("show");
             return;
         }
 
