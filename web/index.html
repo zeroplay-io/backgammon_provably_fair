@@ -916,35 +916,6 @@
         font-size: 0.85rem;
       }
 
-      .floating-btn {
-        position: fixed;
-        bottom: 24px;
-        right: 24px;
-        width: 56px;
-        height: 56px;
-        border-radius: 50%;
-        background: var(--accent);
-        color: white;
-        border: none;
-        box-shadow: var(--shadow-lg);
-        cursor: pointer;
-        display: none;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.5rem;
-        transition: all 0.2s;
-        z-index: 100;
-      }
-
-      .floating-btn.show {
-        display: flex;
-      }
-
-      .floating-btn:hover {
-        transform: scale(1.1);
-        background: #059669;
-      }
-
       @keyframes pulse {
         0%,
         100% {
@@ -1276,15 +1247,6 @@
       </footer>
     </div>
 
-    <!-- Floating button to reopen results -->
-    <button
-      class="floating-btn"
-      id="floatingBtn"
-      title="Show Verification Results"
-    >
-      🎯
-    </button>
-
     <!-- Share modal -->
     <div class="modal-overlay" id="shareModal">
       <div class="modal">
@@ -1403,7 +1365,6 @@
       const rawReportSection = $("rawReportSection");
       const rawReportToggle = $("rawReportToggle");
       const rawReportContent = $("rawReportContent");
-      const floatingBtn = $("floatingBtn");
       const shareModal = $("shareModal");
       const closeShareModal = $("closeShareModal");
       const loadingOverlay = $("loadingOverlay");
@@ -1534,13 +1495,6 @@
         }
       });
 
-      // Floating button
-      floatingBtn.addEventListener("click", () => {
-        if (currentGameId) {
-          showSuccessWithActions(currentReport.rolls.length / 2);
-        }
-      });
-
       // Share modal
       closeShareModal.addEventListener("click", () => {
         shareModal.classList.remove("show");
@@ -1620,7 +1574,6 @@
         progressBar.classList.remove("show");
         finalResult.classList.remove("show");
         rawReportSection.style.display = "none";
-        floatingBtn.classList.remove("show");
         resetSteps();
       }
 
@@ -1687,7 +1640,6 @@
         verificationSteps.classList.add("show");
         progressBar.classList.add("show");
         finalResult.classList.remove("show");
-        floatingBtn.classList.remove("show");
         resetSteps();
 
         try {
@@ -1998,9 +1950,6 @@
           null,
           2
         );
-
-        // Show floating button for future access
-        floatingBtn.classList.add("show");
 
         // Auto-scroll to final result
         setTimeout(() => {
