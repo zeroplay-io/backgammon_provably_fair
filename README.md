@@ -1,11 +1,25 @@
-[![Download Backgammon GO: Fair Dice from AppStore](img/stores/app-store.svg)](https://apps.apple.com/app/id6739750400)
-
 # Provably-Fair Backgammon Verifier
 
 This repository provides **all the client-side tools players need to independently
 verify every dice roll in our Backgammon game**.  
 The C++ game server (private repo) publishes a JSON report at the end of each
 match; everything here is used to confirm that report.
+
+## Backgammon Online Fair Dice Apps
+
+<p>
+  <a href="https://apps.apple.com/app/id6739750400">
+    <img alt="Download Backgammon Online Fair Dice from AppStore" src="img/stores/app-store.svg" height="40" style="margin-right:20px;">
+  </a>
+  <a href="https://play.google.com/store/apps/details?id=io.zeroplay.backgammon2">
+    <img alt="Download Backgammon Online Fair Dice from Google Play" src="img/stores/google-play.png" height="40" style="margin-right:20px;">
+  </a>
+  <a href="https://play.zeroplay.io/backgammon/">
+    <img alt="Play Backgammon Online Fair Dice on Web" src="img/stores/h5.svg" height="40">
+  </a>
+</p>
+
+
 
 ## What’s inside
 

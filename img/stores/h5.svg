@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="142" height="40" viewBox="0 0 142 40"
+     role="img" aria-label="Play on Web">
+  <title>Play on Web</title>
+
+  <!-- ===== 渐变定义 ===== -->
+  <defs>
+    <!-- 主渐变 -->
+    <linearGradient id="badge-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%"  stop-color="#2D6CF6"/>
+      <stop offset="100%" stop-color="#7A32FF"/>
+    </linearGradient>
+    <!-- 左上柔光 -->
+    <radialGradient id="badge-glow" cx="0.25" cy="0.2" r="0.6">
+      <stop offset="0%"  stop-color="#FFFFFF" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- ===== 背景 ===== -->
+  <rect width="142" height="40" rx="8" fill="url(#badge-bg)"/>
+  <rect width="142" height="40" rx="8" fill="url(#badge-glow)"/>
+
+  <!-- ===== 图标区 ===== -->
+  <g transform="translate(4 4)">
+    <rect width="32" height="32" rx="6" fill="#fff" fill-opacity=".12"/>
+    <g stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+      <circle cx="16" cy="16" r="9"/>
+      <line x1="7" y1="16" x2="25" y2="16"/>
+      <path d="M16 7a13 13 0 0 0 0 18"/>
+      <path d="M16 7a13 13 0 0 1 0 18"/>
+    </g>
+  </g>
+
+  <!-- ===== 文本 ===== -->
+  <text x="44" y="25"
+        fill="#FFFFFF"
+        font-family="Helvetica, Arial, sans-serif"
+        font-size="15"
+        font-weight="600"
+        letter-spacing=".25">
+    Play on Web
+  </text>
+</svg>
+
