@@ -5,17 +5,17 @@ verify every dice roll in our Backgammon game**.
 The C++ game server (private repo) publishes a JSON report at the end of each
 match; everything here is used to confirm that report.
 
-## Backgammon Online Fair Dice Apps
+## Backgammon Live: Online Play
 
 <p>
   <a href="https://apps.apple.com/app/id6739750400" target="_blank">
-    <img alt="Download Backgammon Online Fair Dice from AppStore" src="img/stores/app-store.svg" height="40" style="margin-right:20px;">
+    <img alt="Download Backgammon from AppStore" src="img/stores/app-store.svg" height="40" style="margin-right:20px;">
   </a>
   <a href="https://play.google.com/store/apps/details?id=io.zeroplay.backgammon2" target="_blank">
-    <img alt="Download Backgammon Online Fair Dice from Google Play" src="img/stores/google-play.png" height="40" style="margin-right:20px;">
+    <img alt="Download Backgammon from Google Play" src="img/stores/google-play.png" height="40" style="margin-right:20px;">
   </a>
   <a href="https://play.zeroplay.io/backgammon/" target="_blank">
-    <img alt="Play Backgammon Online Fair Dice on Web" src="img/stores/h5.svg" height="40">
+    <img alt="Play Backgammon on Web" src="img/stores/h5.svg" height="40">
   </a>
 </p>
 
