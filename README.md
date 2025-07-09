@@ -5,7 +5,7 @@ verify every dice roll in our Backgammon game**.
 The C++ game server (private repo) publishes a JSON report at the end of each
 match; everything here is used to confirm that report.
 
-## Backgammon Live: Online Play
+## Backgammon - Fair Board Game
 
 <p>
   <a href="https://apps.apple.com/app/id6739750400" target="_blank">
