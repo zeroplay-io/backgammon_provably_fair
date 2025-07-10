@@ -779,13 +779,13 @@
       /* Star rating display */
       .stars-container {
         display: flex;
-        gap: 4px;
+        gap: 2px;
         position: relative;
       }
 
       .star {
-        width: 20px;
-        height: 20px;
+        width: 16px;
+        height: 16px;
         position: relative;
       }
 
@@ -2218,28 +2218,9 @@
       }
 
       function rateApp() {
-        // Detect if the user is on iOS or Android
-        const isIOS =
-          /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-        const isAndroid = /Android/.test(navigator.userAgent);
-
-        // Replace with your actual app IDs
-        const appStoreId = "6739750400"; // Your iOS App Store ID
-        const playStoreId = "io.zeroplay.backgammon2"; // Your Android package name
-
-        if (isIOS) {
-          // Redirect to App Store
-          window.open(
-            `https://apps.apple.com/app/id${appStoreId}?action=write-review`,
-            "_blank"
-          );
-        } else {
-          // Redirect to Google Play Store
-          window.open(
-            `https://play.google.com/store/apps/details?id=${playStoreId}`,
-            "_blank"
-          );
-        }
+        const url =
+          "https://backgammon-go.onelink.me/4n1X?pid=fairness_verifier&c=rate_us&af_ios_url=https%3A%2F%2Fapps.apple.com%2Fapp%2Fid6739750400%3Faction%3Dwrite-review&af_android_url=market%3A%2F%2Fdetails%3Fid%3Dio.zeroplay.backgammon2%26reviewId%3D0&af_r=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dio.zeroplay.backgammon2%26reviewId%3D0&af_param_forwarding=false";
+        window.open(url, "_blank");
       }
 
       function sleep(ms) {
